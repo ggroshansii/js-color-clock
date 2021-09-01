@@ -6,7 +6,7 @@ function getCurrentTime() {
   const today = new Date();
   let seconds, hours;
   today.getSeconds() < 10 ? (seconds = "0" + today.getSeconds()) : (seconds = today.getSeconds());
-  today.getMinutes() < 10 ? (minutes = "0" + today.getMinutes()) : (minutes= today.getSeconds());
+  today.getMinutes() < 10 ? (minutes = "0" + today.getMinutes()) : (minutes= today.getMinutes());
   today.getHours() > 12 ? (hours = today.getHours() - 12) : hours = today.getHours();
   return {
     hours,
@@ -20,6 +20,7 @@ function updateTime() {
     const minutes = getCurrentTime().minutes;
     const seconds = getCurrentTime().seconds;
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
+    clockFace.style.backgroundColor = `#018DED`;
 }
 
 function updateTimetoHex() {
@@ -31,10 +32,7 @@ function updateTimetoHex() {
     if (seconds.length < 2) seconds = "0" + seconds;
 
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
-    clockDisplay.style.backgroundColor = hours + minutes + seconds;
-    console.log(clockDisplay.style.backgroundColor);
-    console.log(typeof (hours + minutes + seconds))
-    console.log(hours+ minutes+ seconds);
+    clockFace.style.backgroundColor = `#${hours}${minutes}${seconds}`;
 }
 
 
