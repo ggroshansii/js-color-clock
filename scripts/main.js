@@ -6,10 +6,11 @@ function getCurrentTime() {
   const today = new Date();
   let seconds, hours;
   today.getSeconds() < 10 ? (seconds = "0" + today.getSeconds()) : (seconds = today.getSeconds());
+  today.getMinutes() < 10 ? (minutes = "0" + today.getMinutes()) : (minutes= today.getSeconds());
   today.getHours() > 12 ? (hours = today.getHours() - 12) : hours = today.getHours();
   return {
     hours,
-    minutes: today.getMinutes(),
+    minutes: minutes,
     seconds,
   };
 }
@@ -22,11 +23,21 @@ function updateTime() {
 }
 
 function updateTimetoHex() {
-    const hours = getCurrentTime().hours.toString(16);
-    const minutes = getCurrentTime().minutes.toString(16);
-    const seconds = getCurrentTime().seconds.toString(16);
+    let hours = getCurrentTime().hours.toString(16);
+    let minutes = getCurrentTime().minutes.toString(16);
+    let seconds = getCurrentTime().seconds.toString(16);
+    if (hours.length < 2) hours = "0" + hours;
+    if (minutes.length < 2) minutes = "0" + minutes;
+    if (seconds.length < 2) seconds = "0" + seconds;
+
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
+    clockDisplay.style.backgroundColor = hours + minutes + seconds;
+    console.log(clockDisplay.style.backgroundColor);
+    console.log(typeof (hours + minutes + seconds))
+    console.log(hours+ minutes+ seconds);
 }
+
+
 
 //Updates the clockDisplay with the current time every second
 let initialCounter = setInterval(updateTime,1000);
@@ -40,15 +51,14 @@ function updateProgressBarLength() {
 const progressBarCounter = setInterval(updateProgressBarLength, 1000);
 
 let hexInterval;
-clockFace.addEventListener("mouseover", () => {
+clockFace.addEventListener("mouseover", (event) => {
     clearInterval(initialCounter);
     hexInterval = setInterval(updateTimetoHex,
         1000
       );
-    
 });
 
-clockFace.addEventListener("mouseout", () => {
+clockFace.addEventListener("mouseout", (event) => {
     clearInterval(hexInterval);
     initialCounter = setInterval(updateTime, 1000
       );
