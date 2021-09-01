@@ -1,6 +1,8 @@
 const clockDisplay = document.querySelector(".clock-display");
 const clockFace = document.querySelector(".clock-face");
 
+console.log("TIME AT PAGE LOAD:", getCurrentTime().hours + ":" + getCurrentTime().minutes + ":" + getCurrentTime().seconds);
+
 //Obtains the current time in hours:minutes:seconds and logs it to the clockDisplay element
 function getCurrentTime() {
   const today = new Date();
@@ -8,6 +10,7 @@ function getCurrentTime() {
   today.getSeconds() < 10 ? (seconds = "0" + today.getSeconds()) : (seconds = today.getSeconds());
   today.getMinutes() < 10 ? (minutes = "0" + today.getMinutes()) : (minutes= today.getMinutes());
   today.getHours() > 12 ? (hours = today.getHours() - 12) : hours = today.getHours();
+
   return {
     hours,
     minutes: minutes,
@@ -21,6 +24,7 @@ function updateTime() {
     const seconds = getCurrentTime().seconds;
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
     clockFace.style.backgroundColor = `#018DED`;
+    console.log(hours + ":" + minutes + ":" + seconds);
 }
 
 function updateTimetoHex() {
@@ -33,9 +37,8 @@ function updateTimetoHex() {
 
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
     clockFace.style.backgroundColor = `#${hours}${minutes}${seconds}`;
+    console.log("HEX COLOR BASED ON TIME:", `#${hours}${minutes}${seconds}`);
 }
-
-
 
 //Updates the clockDisplay with the current time every second
 let initialCounter = setInterval(updateTime,1000);
@@ -44,6 +47,7 @@ function updateProgressBarLength() {
   let percentage = (getCurrentTime().seconds / 60).toFixed(2);
   const clockProgressBar = document.querySelector(".clock-progress-bar");
   clockProgressBar.style.width = percentage * 100 + "%";
+  console.log("PROGRESS BAR PERCENTAGE", percentage * 100);
 }
 
 const progressBarCounter = setInterval(updateProgressBarLength, 1000);
