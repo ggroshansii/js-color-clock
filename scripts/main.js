@@ -1,4 +1,5 @@
 const clockDisplay = document.querySelector(".clock-display");
+const clockFace = document.querySelector(".clock-face");
 
 //Obtains the current time in hours:minutes:seconds and logs it to the clockDisplay element
 function getCurrentTime() {
@@ -7,7 +8,7 @@ function getCurrentTime() {
   today.getSeconds() < 10 ? (seconds = "0" + today.getSeconds()) : (seconds = today.getSeconds());
   today.getHours() > 12 ? (hours = today.getHours() - 12) : hours = today.getHours();
   return {
-    hours: hours,
+    hours,
     minutes: today.getMinutes(),
     seconds,
   };
@@ -28,27 +29,27 @@ function updateTimetoHex() {
 }
 
 //Updates the clockDisplay with the current time every second
-setInterval(updateTime,1000);
+let initialCounter = setInterval(updateTime,1000);
 
 function updateProgressBarLength() {
-  const today = new Date();
-  let percentage = (today.getSeconds() / 60).toFixed(2);
+  let percentage = (getCurrentTime().seconds / 60).toFixed(2);
   const clockProgressBar = document.querySelector(".clock-progress-bar");
   clockProgressBar.style.width = percentage * 100 + "%";
 }
 
-setInterval(updateProgressBarLength, 1000);
+const progressBarCounter = setInterval(updateProgressBarLength, 1000);
 
-
-const clockFace = document.querySelector(".clock-face");
-
+let hexInterval;
 clockFace.addEventListener("mouseover", () => {
-    setInterval(updateTimetoHex,
+    clearInterval(initialCounter);
+    hexInterval = setInterval(updateTimetoHex,
         1000
       );
+    
 });
 
 clockFace.addEventListener("mouseout", () => {
-    setInterval(updateTime, 1000
+    clearInterval(hexInterval);
+    initialCounter = setInterval(updateTime, 1000
       );
 });
