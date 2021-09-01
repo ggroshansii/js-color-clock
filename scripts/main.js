@@ -18,9 +18,18 @@ function getCurrentTime() {
 setInterval(getCurrentTime, 1000);
 
 
-function getSecondsPercentage() {
+function updateProgressBarLength() {
     const today = new Date();
-    console.log((today.getSeconds() / 60).toFixed(2));
+    let percentage = (today.getSeconds() / 60).toFixed(2);
+    const clockProgressBar = document.querySelector(".clock-progress-bar");
+    console.log(clockProgressBar);
+    clockProgressBar.style.width = (percentage * 100) + "%";
 }
 
-setInterval(getSecondsPercentage, 1000);
+setInterval(updateProgressBarLength, 1000);
+
+
+function convertToHex(hours, minutes, seconds) {
+    time = hours.toString(16) + ":" + minutes.toString(16) + ":" + seconds.toString(16)
+}
+
