@@ -28,14 +28,13 @@ function updateTime() {
     console.log(hours + ":" + minutes + ":" + seconds);
 }
 
+updateTime();
+
 //Similar function to updateTime, but converts it to Hexidecimal, then displays on screen during mouseover event
 function updateTimetoHex() {
-    let hours = getCurrentTime().hours.toString(16);
-    let minutes = getCurrentTime().minutes.toString(16);
-    let seconds = getCurrentTime().seconds.toString(16);
-    if (hours.length < 2) hours = "0" + hours;
-    if (minutes.length < 2) minutes = "0" + minutes;
-    if (seconds.length < 2) seconds = "0" + seconds;
+    let hours = getCurrentTime().hours.toString(16).slice(-2);
+    let minutes = getCurrentTime().minutes.toString(16).slice(-2);
+    let seconds = getCurrentTime().seconds.toString(16).slice(-2);
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
     setRandomBkgColor();
     console.log("HEX COLOR BASED ON TIME:", `#${hours}${minutes}${seconds}`);
