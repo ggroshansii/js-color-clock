@@ -37,7 +37,7 @@ function updateTimetoHex() {
     if (minutes.length < 2) minutes = "0" + minutes;
     if (seconds.length < 2) seconds = "0" + seconds;
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
-    clockFace.style.backgroundColor = `#${hours}${minutes}${seconds}`;
+    setRandomBkgColor();
     console.log("HEX COLOR BASED ON TIME:", `#${hours}${minutes}${seconds}`);
 }
 
@@ -69,3 +69,12 @@ clockFace.addEventListener("mouseout", (event) => {
     initialCounter = setInterval(updateTime, 1000
       );
 });
+
+function setRandomBkgColor() {
+  let hours = Math.floor(Math.random() * 256);
+  let minutes = Math.floor(Math.random() * 256);
+  let seconds = Math.floor(Math.random() * 256);
+  clockFace.style.backgroundColor = `rgb(${hours}, ${minutes}, ${seconds})`
+}
+
+
