@@ -1,6 +1,7 @@
 //selected divs for DOM manipulation
 const clockDisplay = document.querySelector(".clock-display");
 const clockFace = document.querySelector(".clock-face");
+let hoverToggle = false;
 
 console.log("TIME AT PAGE LOAD:", time().hours + ":" + time().minutes + ":" + time().seconds);
 
@@ -24,6 +25,7 @@ function updateTime() {
     console.log(hours + ":" + minutes + ":" + seconds);
 }
 
+//Starts clock immediately when page loads
 updateTime();
 
 //Similar function to updateTime, but converts it to Hexidecimal, then displays on screen during mouseover event
@@ -47,25 +49,24 @@ function updateProgressBarLength() {
   clockProgressBar.style.width = percentage * 100 + "%";
   console.log("PROGRESS BAR PERCENTAGE", percentage * 100);
 }
-
+//Initiates the dynamic progress bar
 const progressBarCounter = setInterval(updateProgressBarLength, 1000);
+
 
 //mouseover event acts as a hover, when this event is fired, then updateTimetoHex is continuously fired every 1000ms
 let hexInterval;
 clockFace.addEventListener("mouseover", (event) => {
-    clearInterval(initialCounter);
-    hexInterval = setInterval(updateTimetoHex,
-        1000
-      );
+    hoverToggle = true;
+    checkToggle();
 });
 
 //mouseout event returns the clock to it's original standing  
 clockFace.addEventListener("mouseout", (event) => {
-    clearInterval(hexInterval);
-    initialCounter = setInterval(updateTime, 1000
-      );
+    hoverToggle = false;
+    checkToggle();
 });
 
+//randomly sets the background color; used when mouseover event fires
 function setRandomBkgColor() {
   let hours = Math.floor(Math.random() * 256);
   let minutes = Math.floor(Math.random() * 256);
@@ -73,4 +74,16 @@ function setRandomBkgColor() {
   clockFace.style.backgroundColor = `rgb(${hours}, ${minutes}, ${seconds})`
 }
 
-
+//Checks to see if hoverToggle is set to either true/false based on if events have fired 
+function checkToggle() {
+  if (hoverToggle) {
+    clearInterval(initialCounter);
+    hexInterval = setInterval(updateTimetoHex,
+        1000
+      );
+  } else {
+    clearInterval(hexInterval);
+    initialCounter = setInterval(updateTime, 1000
+      );
+  }
+}
