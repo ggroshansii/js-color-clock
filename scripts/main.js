@@ -2,27 +2,23 @@
 const clockDisplay = document.querySelector(".clock-display");
 const clockFace = document.querySelector(".clock-face");
 
-console.log("TIME AT PAGE LOAD:", getCurrentTime().hours + ":" + getCurrentTime().minutes + ":" + getCurrentTime().seconds);
+console.log("TIME AT PAGE LOAD:", time().hours + ":" + time().minutes + ":" + time().seconds);
 
 //Obtains the current time in hours:minutes:seconds and logs it to the clockDisplay element
-function getCurrentTime() {
+function time() {
   const today = new Date();
-  let seconds, hours;
-  today.getSeconds() < 10 ? (seconds = "0" + today.getSeconds()) : (seconds = today.getSeconds());
-  today.getMinutes() < 10 ? (minutes = "0" + today.getMinutes()) : (minutes= today.getMinutes());
-  today.getHours() > 12 ? (hours = today.getHours() - 12) : hours = today.getHours();
   return {
-    hours,
-    minutes: minutes,
-    seconds,
+    hours: today.getHours(),
+    minutes: today.getMinutes(), 
+    seconds: today.getSeconds(),
   };
 }
 
-//Retrieves time from getCurrentTime() and then displays that time on the clockFace
+//Retrieves time from time() and then displays that time on the clockFace
 function updateTime() {
-    const hours = getCurrentTime().hours;
-    const minutes = getCurrentTime().minutes;
-    const seconds = getCurrentTime().seconds;
+    const hours =("0" + time().hours).slice(-2);
+    const minutes =  ("0" + time().minutes).slice(-2);
+    const seconds = ("0" + time().seconds).slice(-2);
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
     clockFace.style.backgroundColor = `#018DED`;
     console.log(hours + ":" + minutes + ":" + seconds);
@@ -32,9 +28,10 @@ updateTime();
 
 //Similar function to updateTime, but converts it to Hexidecimal, then displays on screen during mouseover event
 function updateTimetoHex() {
-    let hours = getCurrentTime().hours.toString(16).slice(-2);
-    let minutes = getCurrentTime().minutes.toString(16).slice(-2);
-    let seconds = getCurrentTime().seconds.toString(16).slice(-2);
+    let hours = ("0" + (time().hours.toString(16))).slice(-2);
+    let minutes = ("0" + (time().minutes.toString(16))).slice(-2);
+    let seconds = ("0" + (time().seconds.toString(16))).slice(-2);
+    console.log("HEXXX : ", hours, minutes, seconds)
     clockDisplay.textContent = hours + ":" + minutes + ":" + seconds;
     setRandomBkgColor();
     console.log("HEX COLOR BASED ON TIME:", `#${hours}${minutes}${seconds}`);
@@ -45,7 +42,7 @@ let initialCounter = setInterval(updateTime,1000);
 
 //Dynamically changes the width of the progress bar based on value of seconds
 function updateProgressBarLength() {
-  let percentage = (getCurrentTime().seconds / 60).toFixed(2);
+  let percentage = (time().seconds / 60).toFixed(2);
   const clockProgressBar = document.querySelector(".clock-progress-bar");
   clockProgressBar.style.width = percentage * 100 + "%";
   console.log("PROGRESS BAR PERCENTAGE", percentage * 100);
