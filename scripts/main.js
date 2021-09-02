@@ -44,7 +44,7 @@ let initialCounter = setInterval(updateTime,1000);
 
 //Dynamically changes the width of the progress bar based on value of seconds
 function updateProgressBarLength() {
-  let percentage = (time().seconds / 60).toFixed(2);
+  let percentage = (time().seconds / 100).toFixed(2);
   const clockProgressBar = document.querySelector(".clock-progress-bar");
   clockProgressBar.style.width = percentage * 100 + "%";
   console.log("PROGRESS BAR PERCENTAGE", percentage * 100);
